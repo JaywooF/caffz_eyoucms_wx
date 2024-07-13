@@ -1,0 +1,7 @@
+<view class="container">
+  <view class="List" >
+    <view class="btn" bindtap="linkList" data-field="{{item}}" wx:for="{{listitem}}" wx:key="index">
+      <text>{{item.typename}}</text>
+    </view>
+  </view>
+</view>

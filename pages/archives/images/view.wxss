@@ -1,0 +1,112 @@
+/**
+ * 易优CMS
+ * ============================================================================
+ * 版权所有 2016-2028 海南赞赞网络科技有限公司，并保留所有权利。
+ * 网站地址: http://www.eyoucms.com
+ * ----------------------------------------------------------------------------
+ * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
+ * ============================================================================
+ * Author: 小虎哥 <1105415366@qq.com>
+ * Date: 2020-1-1
+ */
+
+/* wxParse.wxss */
+@import "/wxParse/wxParse.wxss";
+
+page {
+  /* padding-bottom: 100rpx; */
+  background-color: #f7f7f7;
+}
+
+/*幻灯片*/
+.block-swiper {
+  padding: 0rpx;
+}
+
+.block-swiper .swiper-box {
+  height: auto;
+  position: relative;
+}
+
+.block-swiper .swipers {
+  height: 500rpx;
+}
+
+.block-swiper .swiper-box image {
+  width: 100%;
+  height: 100%;
+}
+
+/*文档详情*/
+.block-detail {
+  padding: 0 30rpx;
+  background-color: #ffffff;
+}
+
+.block-detail .detail-header {
+  padding: 30rpx 0;
+  border-bottom: 1px solid #eee;
+}
+
+.block-detail .detail-header .title {
+  font-size: 36rpx;
+}
+
+.block-detail .detail-header .time {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.block-detail .detail-header .time .iconfont {
+  font-size: 28rpx;
+  margin-right: 10rpx;
+}
+
+.block-detail .detail-con {
+  padding: 30rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  line-height: 46rpx;
+}
+
+.block-detail .detail-con text {
+  display: inline-block;
+}
+
+.block-detail .detail-con image {
+  max-width: 100%;
+}
+
+/*上下篇*/
+.pagination {
+  background-color: #fff;
+  padding: 20rpx;
+  border-top: 1px solid #eee;
+}
+
+.nav-previous,
+.nav-next {
+  font-size: 28rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 20rpx auto;
+  color: #999;
+  display: flex;
+}
+
+.nav-previous .previous-title,
+.nav-next .next-title {
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.nav-previous .previous-text,
+.nav-next .next-text {
+  width: 100rpx;
+}
+

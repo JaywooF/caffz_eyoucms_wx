@@ -1,0 +1,178 @@
+<!--**
+ * 易优CMS
+ * ============================================================================
+ * 版权所有 2016-2028 海南赞赞网络科技有限公司，并保留所有权利。
+ * 网站地址: http://www.eyoucms.com
+ * ----------------------------------------------------------------------------
+ * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
+ * ============================================================================
+ * Author: 小虎哥 <1105415366@qq.com>
+ * Date: 2020-1-1
+ */-->
+
+<import src="../../wxParse/wxParse.wxml"></import>
+<block wx:if="{{isApiLoaded}}">
+
+	<!-- 搜索框 start-->
+	<view class="index-search-box">
+    <view class="index-search "   bindtap="jumpToSearch" style="z-index: 40;" >
+      <view class="index-cont-search">
+        <text class="col-DECAB1 f-26" >请输入关键词搜索</text>
+        <icon class="t-r" color="rgba(166, 166, 166, 0.4)" size="18" type="search"></icon>
+      </view>
+    </view>
+  </view>
+	<!--搜索框 end-->
+
+	<!--轮播图 start-->
+	<block wx:if="{{ adv_1.data }}">
+		<view class="block-swiper">
+			<view class="swiper-box">
+				<swiper indicator-color="#999" indicator-active-color="rgb(255,255,255,0.8)" indicator-dots="{{true}}" class='swipers' autoplay="true" current="{{currentSwiper}}">
+					<block wx:for="{{adv_1.data}}" wx:key="index">
+						<swiper-item>
+							<image class="swiper-image" src="{{item.litpic}}" lazy-load="true" catchtap="navigationTo" data-url="{{ item.url }}" />
+						</swiper-item>
+					</block>
+				</swiper>
+			</view>
+		</view>
+	</block>
+	<!--轮播图 end-->
+      <view class="nav b-f ptl-20  flex-dir-row flex-x-start">
+          <view class="nav-item  flex-dir-column flex-y-center" bindtap="jumpList" data-typeid="1" data-channel="6">
+              <view class="nav_bg nav_bg_01">
+                <image src="/static/images/about.png" class="nav-img"></image>
+              </view>
+              <text class="f-24 m-top20">关于</text>
+          </view>
+          <view class="nav-item  flex-dir-column flex-y-center" bindtap="jumpList" data-typeid="3" data-channel="2">
+              <view class="nav_bg nav_bg_02">
+                <image src="/static/images/product.png" class="nav-img"></image>
+              </view>
+              <text class="f-24 m-top20">产品</text>
+          </view>
+          <view class="nav-item  flex-dir-column flex-y-center" bindtap="jumpList" data-typeid="2" data-channel="1">
+              <view class="nav_bg nav_bg_03">
+                <image src="/static/images/news.png" class="nav-img"></image>
+              </view>
+              <text class="f-24 m-top20">新闻</text>
+          </view>
+          <view class="nav-item  flex-dir-column flex-y-center" bindtap="jumpList" data-typeid="4" data-channel="3">
+              <view class="nav_bg nav_bg_04">
+                <image src="/static/images/case.png" class="nav-img"></image>
+              </view>
+              <text class="f-24 m-top20">案例</text>
+          </view>
+          <view class="nav-item  flex-dir-column flex-y-center" bindtap="jumpList" data-typeid="30" data-channel="8">
+              <view class="nav_bg nav_bg_05">
+                <image src="/static/images/contact.png" class="nav-img"></image>
+              </view>
+              <text class="f-24 m-top20">联系</text>
+          </view>
+      </view>
+  <!-- 模块导航结束 -->
+ 
+	<!--产品模块 start-->
+	<block wx:if="{{ arclist_1.data }}">
+		<view class="block-title">
+			<view class="title-box">
+				<view class="title-box-l"><text>推荐产品</text></view>
+				<view class="title-box-r" catchtap="jumproductList" ><text>更多</text><text class="iconfont sm-you"></text></view>
+			</view>
+		</view>
+		<view class="block-proList">
+			<view class="pro-item" wx:for="{{ arclist_1.data }}" wx:key="this" catchtap="jumpView" data-field="{{item}}">
+				<view class="img">
+					<image src="{{item.litpic}}"></image>
+				</view>
+				<view class="title">{{item.title}}</view>
+				<view class="price">￥{{item.users_price}}</view>
+			</view>
+		</view>
+	</block>
+	<!--产品模块 end-->
+
+	<!--新闻模块 start-->
+	<block wx:if="{{ arclist_2.data }}">
+		<view class="block-title mt20">
+			<view class="title-box">
+				<view class="title-box-l"><text>{{arclist_2.arctype.typename}}</text></view>
+				<view class="title-box-r" catchtap="jumpList" data-field="{{arclist_2.arctype}}"><text>更多</text><text class="iconfont sm-you "></text></view>
+			</view>
+		</view>
+		<view class="block-newsList">
+			<view class="news-item" wx:for="{{ arclist_2.data }}" wx:key="this" catchtap="jumpView" data-field="{{item}}">
+				<view class="news-item-l">
+					<image src="{{item.litpic}}"></image>
+				</view>
+				<view class="news-item-r">
+					<view class="title">{{item.title}}</view>
+					<view class="desc">{{item.seo_description}}</view>
+					<view class="time"><text class="iconfont sm-shijian"></text><text>{{item.add_time}}</text></view>
+				</view>
+			</view>
+		</view>
+	</block>
+	<!--新闻模块 end-->
+
+	<!--案例模块 start-->
+	<block wx:if="{{ arclist_3.data }}">
+		<view class="block-title mt20">
+			<view class="title-box">
+				<view class="title-box-l"><text>{{arclist_3.arctype.typename}}</text></view>
+				<view class="title-box-r" catchtap="jumpList" data-field="{{arclist_3.arctype}}"><text>更多</text><text class="iconfont sm-you "></text></view>
+			</view>
+		</view>
+		<view class="block-proList">
+			<view class="pro-item" wx:for="{{ arclist_3.data }}" wx:key="this" catchtap="jumpView" data-field="{{item}}">
+				<view class="img">
+					<image src="{{item.litpic}}"></image>
+				</view>
+				<view class="title">{{item.title}}</view>
+			</view>
+		</view>
+	</block>
+	<!--案例模块 end-->
+
+	<!--关于我们 start-->
+	<block wx:if="{{ type_1.data }}">
+		<view class="block-title mt20">
+			<view class="title-box">
+				<view class="title-box-l"><text>{{type_1.data.typename}}</text></view>
+				<view class="title-box-r" catchtap="jumpList" data-field="{{type_1.data}}"><text>更多</text><text class="iconfont sm-you "></text></view>
+			</view>
+		</view>
+		<view class="block-about">
+			<template is="wxParse" data="{{ wxParseData:type_1_content.nodes }}"></template>
+		</view>
+	</block>
+	<!--关于我们 end-->
+
+	<!--联系我们 start-->
+	<view class="block-title mt20">
+		<view class="title-box">
+			<view class="title-box-l"><text>联系我们</text></view>
+		</view>
+	</view>
+	<view class="block-contact mb20">
+		<view class="contact-item">
+			<view class="contact-item-l"><text class="iconfont sm-icon"></text></view>
+			<view class="contact-item-r">某某网络科技有限公司</view>
+		</view>
+		<view class="contact-item">
+			<view class="contact-item-l"><text class="iconfont sm-shouji"></text></view>
+			<view class="contact-item-r" bindtap="makePhoneCall" data-mobile="400-1234567">400-1234567</view>
+		</view>
+		<view class="contact-item">
+			<view class="contact-item-l"><text class="iconfont sm-dizhi"></text></view>
+			<view class="contact-item-r" bindtap="gomap" data-coordinate="20.038124,110.324879" data-address="海口市龙华区万绿园">海口市龙华区万绿园</view>
+		</view>
+	</view>
+	<import src="../public/foot.wxml" />
+	<template is="copyright" data="{{copyright:copyright}}" />
+  	<view style=" height: 80rpx;display: block; "></view>
+	<!--联系我们 end-->
+</block>
+<!--这里是底部  -->
+<tabbar type='default'></tabbar>

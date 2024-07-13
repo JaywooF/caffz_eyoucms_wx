@@ -1,0 +1,75 @@
+<!--**
+ * 易优CMS
+ * ============================================================================
+ * 版权所有 2016-2028 海南赞赞网络科技有限公司，并保留所有权利。
+ * 网站地址: http://www.eyoucms.com
+ * ----------------------------------------------------------------------------
+ * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
+ * ============================================================================
+ * Author: 小虎哥 <1105415366@qq.com>
+ * Date: 2020-1-1
+ */-->
+
+<block wx:if="{{ detail.length == 0 }}">
+	<view class="ey-notcont" wx:if="{{ detail.length == 0 }}">
+		<text class="iconfont sm-empty"></text>
+		<text class="cont">亲，没有符合数据</text>
+	</view>
+</block>
+
+<!--内容模板-->
+<import src="../../../wxParse/wxParse.wxml"></import>
+<block wx:if="{{ detail.arcrank >= 0 }}">
+	<view class="block-detail">
+		<view class="detail-header">
+			<view class="title">{{ detail.title }}</view>
+			<view class="time">
+        <text class="iconfont sm-shijian"></text>
+        <text class="text">{{ detail.add_time }}</text>
+				<text class="m-l-35 iconfont sm-liulan"></text>
+        <text class="text">{{detail.click}}</text>
+      </view>
+		</view>
+		<view class="detail-con">
+			<template is="wxParse" data="{{ wxParseData:content.nodes }}"></template>
+		</view>
+	</view>
+	<!-- 上下一篇 -->
+	<view class="pagination" wx:if="{{preDetail.aid || nextDetail.aid}}">
+		<view wx:if="{{preDetail.aid}}" class="nav-previous">
+			<view class="previous-text">上一篇：</view>
+			<view class="previous-title" catchtap="jumpView" data-field="{{preDetail}}">{{preDetail.title}}</view>
+		</view>
+		<view wx:if="{{nextDetail.aid}}" class="nav-next">
+			<view class="next-text">下一篇：</view>
+			<view class="next-title" catchtap="jumpView" data-field="{{nextDetail}}">{{nextDetail.title}}</view>
+		</view>
+	</view>
+  
+  <view style="display: block;height: 40rpx;">
+	</view>
+  <view class="block-title mt20">
+    <view class="title-box title-box flex-dir-row flex-x-between flex-y-center">
+      <view class="title-box-l"><text>{{arcType.typename}}</text></view>
+    </view>
+  </view>
+		<view class="block-newsList">
+			<view class="news-item" wx:for="{{ arcList }}" wx:key="this" catchtap="jumpView" data-field="{{item}}">
+				<view class="news-item-r">
+					<image src="{{item.litpic}}"></image>
+				</view>
+				<view class="news-item-l">
+          <view class="info-wrapper">
+            <view class="title">{{item.title}}</view>
+            <view class="desc">{{item.seo_description}}</view>
+		  		</view>
+					<view class="time"><text>{{item.add_time}}</text></view>
+				</view>
+			</view>
+		</view>
+
+
+
+	<!-- 快捷导航 -->
+	<shortcut shortcutType="share"></shortcut>
+</block>

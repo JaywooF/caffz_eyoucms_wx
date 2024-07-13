@@ -1,0 +1,38 @@
+
+/*联系我们*/
+.block-contact {
+  background-color: #fff;
+  padding: 0 30rpx;
+  border-top: 1px solid #eee;
+}
+
+.block-contact .contact-item {
+  display: flex;
+  padding: 20rpx 0;
+  border-bottom: 1px solid #eee;
+  color: #666;
+  font-size: 30rpx;
+}
+
+.block-contact .contact-item .contact-item-l {
+  width: 50rpx;
+  margin-right: 10rpx;
+  text-align: center;
+}
+
+.block-contact .contact-item .contact-item-l .iconfont {
+  font-size: 40rpx;
+}
+
+.block-contact .contact-item:last-child {
+  border-bottom: 0;
+}
+
+.block-contact .contact-item .contact-item-r {
+  flex: 1;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}

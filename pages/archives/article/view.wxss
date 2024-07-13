@@ -1,0 +1,211 @@
+/**
+ * 易优CMS
+ * ============================================================================
+ * 版权所有 2016-2028 海南赞赞网络科技有限公司，并保留所有权利。
+ * 网站地址: http://www.eyoucms.com
+ * ----------------------------------------------------------------------------
+ * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
+ * ============================================================================
+ * Author: 小虎哥 <1105415366@qq.com>
+ * Date: 2020-1-1
+ */
+
+/* wxParse.wxss */
+@import "/wxParse/wxParse.wxss";
+
+page {
+  /* padding-bottom: 100rpx; */
+  background-color: #f7f7f7;
+}
+
+/*文档详情*/
+.block-detail {
+  padding: 0 30rpx;
+  background-color: #ffffff;
+}
+
+.block-detail .detail-header {
+  padding: 30rpx 0;
+  border-bottom: 1px solid #eee;
+}
+
+.block-detail .detail-header .title {
+  font-size: 36rpx;
+}
+
+.block-detail .detail-header .time {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.block-detail .detail-header .time .iconfont {
+  font-size: 28rpx;
+  margin-right: 10rpx;
+}
+
+.block-detail .detail-con {
+  padding: 30rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  line-height: 46rpx;
+}
+
+.block-detail .detail-con text {
+  display: inline-block;
+}
+
+.block-detail .detail-con image {
+  max-width: 100%;
+}
+
+/*上下篇*/
+.pagination {
+  background-color: #fff;
+  padding: 20rpx;
+  border-top: 1px solid #eee;
+}
+
+.nav-previous,
+.nav-next {
+  font-size: 28rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 20rpx auto;
+  color: #999;
+  display: flex;
+}
+
+.nav-previous .previous-title,
+.nav-next .next-title {
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.nav-previous .previous-text,
+.nav-next .next-text {
+  width: 100rpx;
+}
+
+/*标题*/
+.block-title {
+  padding: 26rpx 30rpx;
+  background: #fff;
+}
+
+.block-title .title-box2 {
+  display: flex;
+  align-items: center;
+}
+
+.block-title  .title-box-l {
+  flex: 1;
+  position: relative;
+  padding-left: 24rpx;
+}
+
+.block-title  .title-box-l text {
+  font-size: 32rpx;
+  color: #333;
+}
+
+.block-title .title-box-l::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -18rpx;
+  display: inline-block;
+  width: 8rpx;
+  height: 36rpx;
+  background: linear-gradient(#ff9111, #ff7900);
+  border-radius: 4rpx;
+}
+
+.block-title .title-box-r text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/*新闻列表*/
+.block-newsList {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #fff;
+  padding: 0 30rpx;
+  border-top: 1px solid #eee;
+}
+
+.block-newsList .news-item {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  border-bottom: 1px solid #eee;
+  padding: 30rpx 0;
+}
+
+.block-newsList .news-item:last-child {
+  border-bottom: 0;
+}
+
+.block-newsList .news-item .news-item-r {
+  float: right;
+  width: 165rpx;
+  height: 120rpx;
+  margin-left: 20rpx;
+  border: 2rpx solid #f1f1f1;
+}
+
+.block-newsList .news-item .news-item-r image {
+  width: 100%;
+  height: 100%;
+  border-radius: 8rpx;
+}
+
+.block-newsList .news-item .news-item-l {
+  min-height: 120rpx;
+  position: relative;
+  overflow: hidden;
+}
+.block-newsList .news-item .news-item-l .info-wrapper {
+  max-height: 40px;
+  overflow: hidden;
+}
+.block-newsList .news-item .news-item-l .title {
+  font-size: 28rpx;
+  color: #353535;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  margin: 0;
+}
+
+.block-newsList .news-item .news-item-l .desc {
+  color: #a9a9a9;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-height: 38rpx;
+}
+
+.block-newsList .news-item .news-item-l .time {
+  font-size: 24rpx;
+  color: #afb1af;
+  position: absolute;
+  left: 0;
+  bottom: -2rpx;
+}
+
+.block-newsList .news-item .news-item-l .time .iconfont {
+  font-size: 24rpx;
+  margin-right: 10rpx;
+}

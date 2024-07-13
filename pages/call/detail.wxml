@@ -1,0 +1,16 @@
+<view class="container">
+  <view class="block-contact" style="padding-bottom:94rpx" >
+		<view class="contact-item">
+			<view class="contact-item-l"><text class="iconfont sm-icon"></text></view>
+			<view class="contact-item-r">海南赞赞网络科技有限公司</view>
+		</view>
+		<view class="contact-item">
+			<view class="contact-item-l"><text class="iconfont sm-shouji"></text></view>
+			<view class="contact-item-r" bindtap="makePhoneCall" data-mobile="0898-32622888">0898-32622888</view>
+		</view>
+		<view class="contact-item">
+			<view class="contact-item-l"><text class="iconfont sm-dizhi"></text></view>
+			<view class="contact-item-r" bindtap="gomap" data-coordinate="19.992555,110.339932" data-address="海口市龙华区龙昆南路城西商务中心1708室">海口市龙华区龙昆南路城西商务中心1708室</view>
+		</view>
+	</view>
+</view>

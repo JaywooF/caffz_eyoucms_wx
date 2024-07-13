@@ -1,0 +1,37 @@
+<view class="container">
+    <!-- 搜索框 -->
+    <view class="index-search-box">
+        <navigator class="index-search" hover-class="none" openType="navigate" url="../search/index">
+            <view class="index-cont-search flex-dir-row flex-y-center dis-flex">
+              <icon class="t-r" color="rgba(166, 166, 166, 0.4)" size="14"  type="search"></icon>
+              <text class="f-24 m-l-50" style="text-indent: 10rpx;" wx:if="{{shop_open == 1}}">请搜索您想要的商品</text>
+              <text class="f-24 m-l-50" wx:else>请输入关键词搜索</text>
+            </view>
+        </navigator>
+    </view>
+    <view class="cate-content-30 mb20" >
+        <view  wx:for="{{channelList}}" wx:for-item="item" wx:key="index">
+            <view class="title" bindtap="jumpList" data-field="{{item}}">
+                {{item.typename}}
+            </view>
+            <viw wx:for="{{item.children}}" wx:for-item="item1" wx:key="index1">
+                <view style="padding-left: 50rpx;" class="cate" >
+                    <view class="cate-item" bindtap="jumpList" data-field="{{item1}}">
+                        {{item1.typename}}
+                    </view>
+                </view>
+                <viw wx:for="{{item1.children}}" wx:for-item="item2" wx:key="index2">
+                    <view style="padding-left: 100rpx;" class="cate" >
+                        <view class="cate-item" bindtap="jumpList" data-field="{{item2}}">
+                            {{item2.typename}}
+                        </view>
+                    </view>
+                </viw>
+            </viw>
+        </view>
+    </view>
+</view>
+
+<view style="height: 114rpx;display: block;"></view>
+  <!--这里是底部  -->
+  <tabbar type='default'></tabbar>

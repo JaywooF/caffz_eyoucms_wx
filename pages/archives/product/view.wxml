@@ -1,0 +1,346 @@
+<!--**
+ * 易优CMS
+ * ============================================================================
+ * 版权所有 2016-2028 海南赞赞网络科技有限公司，并保留所有权利。
+ * 网站地址: http://www.eyoucms.com
+ * ----------------------------------------------------------------------------
+ * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
+ * ============================================================================
+ * Author: 小虎哥 <1105415366@qq.com>
+ * Date: 2020-1-1
+ */-->
+
+ <block wx:if="{{ detail.length == 0 }}">
+	<view class="ey-notcont" wx:if="{{ detail.length == 0 }}">
+		<text class="iconfont sm-empty"></text>
+		<text class="cont">亲，没有符合数据</text>
+	</view>
+</block>
+
+<!--内容模板-->
+<import src="../../../wxParse/wxParse.wxml"></import>
+<block wx:if="{{ detail.arcrank >= 0 }}">
+	<!--轮播图 start-->
+	<view class="block-swiper">
+		<view class="swiper-box">
+			<swiper indicator-color="#999" indicator-active-color="rgb(255,255,255,0.8)" indicator-dots="{{true}}"
+				class='swipers' current="{{currentSwiper}}">
+				<block wx:for="{{detail.image_list}}" wx:key="this" catchtap="onPreviewImages" data-index="{{ index }}">
+					<swiper-item catchtap="onPreviewImages">
+						<image class="swiper-image" src="{{item.image_url}}" lazy-load="true" />
+					</swiper-item>
+				</block>
+			</swiper>
+		</view>
+	</view>
+	<!--轮播图 end-->
+
+	<view class="block-produce">
+		<view class="produce-header">
+			<view class="title">{{detail.title}}</view>
+			<view class="price">
+        <text>￥</text>{{ detail.users_price }} 
+          <!-- 划线价 -->
+          <view class="line-price" wx:if="{{detail.old_price > detail.users_price}}">
+            <text class="col-909090 f-24">￥{{ detail.old_price }}</text>
+          </view>
+      </view>
+		</view>
+    <!-- 商品规格 -->
+    <form bindsubmit="onToggleTrade" data-type="specType" wx:if="{{productMultiSpec.spec_data.length}}">
+					<button class="btn-normal" formType="submit">
+						<view class="sku-selector cont-box b-f m-top20 dis-flex flex-y-center">
+							<view class="flex-box f-27" wx:if="{{Spec_value_List.length > 0}}">
+								<text class="col-9 m-r-20" wx:if="{{shop_open == 1}}" >已选择</text>
+								<text class="col-9 m-r-20" wx:else >规格</text>
+								<text wx:for="{{Spec_value_List}}" class="m-r-20" wx:key="index">{{item}}</text>
+								<!-- <text wx:for="{{Spec_value_List}}" class="m-r-20" wx:key="index">{{spec_name_List[index]}}:{{item}}</text> -->
+							</view>
+							<view class="flex-box f-27" wx:else>
+								<text class="col-9 m-r-20">请选择</text>
+								<text wx:for="{{ detail.spec_attr.spec_data }}" wx:key="this">{{ item.spec_name }} </text>
+							</view>
+							<view class="f-26 col-9 t-r">
+								<text class="iconfont sm-you"></text>
+							</view>
+						</view>
+					</button>
+				</form>
+		<!--切换导航-->
+		<view class="tab-nav">
+			<scroll-view class="tab-nav-con" scroll-x scroll-left="{{tabScroll}}" scroll-with-animation="true">
+				<view class="tab-item {{currentTab == 0 ? 'active' : ''}}" data-current="0" bindtap="clickTab">
+					<view class="text">产品介绍</view>
+				</view>
+				<view class="tab-item {{currentTab == 1 ? 'active' : ''}}" data-current="1" bindtap="clickTab"
+					wx:if="{{detail.attr_list.length > 0}}">
+					<view class="text">规格参数</view>
+				</view>
+				<view class="tab-item {{currentTab == 2 ? 'active' : ''}}" data-current="2" bindtap="clickTab"
+					wx:if="{{detail.customField.length > 0}}">
+					<view class="text">其他相关</view>
+				</view>
+			</scroll-view>
+		</view>
+		<!--切换导航 end-->
+		<!--产品内容 start-->
+		<view class="produce-con">
+			<view class="{{0==currentTab?'cur':''}}">
+				<block wx:if="{{detail.content!=''}}">
+					<view class="detail-con">
+						<template is="wxParse" data="{{wxParseData:content.nodes}}"></template>
+					</view>
+				</block>
+				<block wx:else>
+					<view class="ey-notcont">
+						<text class="iconfont sm-empty"></text>
+						<text class="cont">亲，没有符合数据</text>
+					</view>
+				</block>
+			</view>
+			<view class="{{1==currentTab?'cur':''}}">
+				<view class="detail-con">
+					<view class="spec-item" wx:for="{{detail.attr_list}}" wx:key="this">
+						<view class="spec-item-l">{{item.attr_name}}</view>
+						<view class="spec-item-r">{{item.attr_value}}</view>
+					</view>
+				</view>
+			</view>
+			<view class="{{2==currentTab?'cur':''}}">
+				<view class="detail-con">
+					<view class="other-item" wx:for="{{detail.customField}}" wx:key="this">
+						<view class="other-item-l">{{ item.title }}</view>
+						<view class="other-item-r">
+							<template wx:if="{{ item.dtype == 'htmltext'}}" is="wxParse"
+								data="{{ wxParseData:item.value }}"></template>
+							<video wx:elif="{{ item.dtype == 'media' }}" src="{{ item.value }}" autoplay controls></video>
+							<view wx:elif="{{ item.dtype == 'imgs' }}">
+								<image wx:for="{{item.value}}" wx:key="index" wx:for-item="item2" src="{{ item2.image_url }}"></image>
+							</view>
+							<image wx:elif="{{ item.dtype == 'img' }}" src="{{ item.value }}"></image>
+							<text wx:else>{{ item.value }}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+    <!--为您推荐-->
+			<view  id="scroll3" class="goods-rem b-f tabItem" wx:if="{{product.list.length > 0}}">
+				<view class="block-title mt20">
+          <view class="title-box title-box flex-dir-row flex-x-between flex-y-center">
+            <view class="title-box-l"><text>最新产品</text></view>
+          </view>
+        </view>
+				<view class="goods-list dis-flex flex-dir-row flex-x-between">
+					<view class="goods-item" wx:for="{{product.list}}" wx:key="this" catchtap="jumpView" data-field="{{item}}" data-aid="{{item.aid}}">
+						<view class="img">
+							<image src="{{item.litpic}}" mode="aspectFill" style="width:100%; margin-top: 20rpx; height:310rpx; border-radius:10rpx"></image>
+						</view>
+						<view class="name f-29 twolist-hidden ">
+							{{item.title}}
+						</view>
+						<view class="price dis-flex flex-dir-row flex-y-center flex-x-between">
+							<view >￥{{item.users_price}}</view>
+							<view class="price-r">
+								<!-- <view class="buy" catchtap="addCart" data-aid="{{item.aid}}"> <text class="iconfont sm-shortcutgouwuche"></text>
+								</view> -->
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		<!--产品内容 end-->
+	</view>
+
+	<!--我要订购 start-->
+	<!-- <view class="block-footer-btn">
+		<button class="btn on" open-type="contact" type="default-light" show-message-card="true" send-message-title="{{detail.title}}" send-message-path="/pages/archives/product/view?aid={{detail.aid}}&typeid={{detail.typeid}}" send-message-img="{{detail.litpic}}">我要咨询</button>
+	</view> -->
+	<!--我要订购 end-->
+
+	<!-- 快捷导航 -->
+  
+  <form bindsubmit="onClickShare">
+    <button class="bottom-share"   formType="submit">
+      <view class="share-btn"><text class="text">分享</text></view>
+    </button>
+  </form>
+	<!--产品底部 start-->
+	<!-- 底部操作栏 -->
+	<block>
+		<view wx:if="{{shop_open == 1}}" class="footer-fixed f-30">
+			<!-- 在线客服 - 在线聊天 -->
+			<block>
+				<view class="goods-fixed-icon dis-flex flex-dir-column col-545454 flex-x-center flex-y-center" catchtap="jumpIndex" >
+					<text class="iconfont f-40 m-3 sm-shouye"></text>
+					<text class="f-23 m-top4">首页</text>
+				</view>
+			</block>
+      <view class="goods-fixed-icon dis-flex flex-dir-column col-545454 flex-x-center flex-y-center" catchtap="collect">
+          <text class="iconfont f-40 m-3 sm-shoucanghou cur" wx:if="{{isCollect == 1}}"></text>
+          <text class="iconfont f-40 m-3 sm-wodeshoucang" wx:elif="{{isCollect == 0}}"></text>
+					<text class="f-23 m-top4">收藏</text>
+        </view>
+			<view class="goods-fixed-icon m-top2 col-545454  dis-flex flex-dir-column flex-x-center flex-y-center">
+					<button open-type="contact" sessionFrom="weapp" size="27"
+						style="opacity: 0;position:absolute;top:0px;left:0px;display:block;width:100%;height:100%;"
+						type="default-light" show-message-card="true" send-message-title="{{detail.title}}"
+						send-message-path="/pages/article/view?aid={{detail.aid}}" send-message-img="{{detail.litpic}}"></button>
+					<text class="iconfont m-top4  f-40 sm-kehufuwukefu "></text>
+					<text class="f-23 m-top4">客服</text>
+			</view>
+      
+			<view class="footer-right">
+				<view class="order-bt3" catchtap="onToggleTrade" data-type='buyNow'>立即购买</view>
+			</view>
+		</view>
+    <view class="block-footerOper"  wx:else>
+      <view class="footerOper-l">
+        <view class="item" catchtap="goHome">
+          <view class="item-t">
+            <text class="iconfont sm-shouye"></text>
+          </view>
+          <view class="item-b">首页</view>
+        </view>
+        <view class="item" catchtap="collect">
+          <view class="item-t cur" wx:if="{{isCollect == 1}}">
+            <text class="iconfont sm-shoucanghou"></text>
+          </view>
+          <view class="item-t" wx:elif="{{isCollect == 0}}">
+            <text class="iconfont sm-wodeshoucang"></text>
+          </view>
+          <view class="item-b">收藏</view>
+        </view>
+      </view>
+      <view class="footerOper-m">
+        <view class="price"><text>￥</text>{{ detail.users_price }}</view>
+      </view>
+      <view class="footerOper-r">
+        <button class="btn" open-type="contact" type="default-light" show-message-card="true"
+          send-message-title="{{detail.title}}"
+          send-message-path="/pages/archives/product/view?aid={{detail.aid}}&typeid={{detail.typeid}}"
+          send-message-img="{{detail.litpic}}">我要咨询</button>
+      </view>	   
+    </view>
+	</block>
+	<!--产品底部 end-->
+  
+	<!-- 分享弹窗框 -->
+	<zan-popup show="{{ SharePopup }}" type="bottom" bindclose="onClickShare">
+		<view class="popup__share ptl-25 dis-flex flex-dir-row f-24 col-727272 flex-x-around flex-y-center b-f">
+      <button style="z-index: 10000000000000000;" class="dis-flex flex-dir-column btn-normal flex-y-center" open-type="share">
+				<view style="background-color: #14BE13;" class="Share_item iconfont ">
+					<text class="iconfont f-46 sm-weixin c-f"></text>
+				</view>
+				<text>发送给微信好友</text>
+			</button>
+      <button class="dis-flex flex-dir-column btn-normal flex-y-center"  bindtap="createGoodsShareQrcodePoster" >
+      <!-- bindtap="saveImage" -->
+				<view style="background-color:#F2CA58;" class="Share_item iconfont ">
+					<text class="iconfont f-46 sm-tupian c-f"></text>
+				</view>
+				<text>保存海报至相册</text>
+			</button>
+		</view>
+	</zan-popup>
+
+	<!-- 分享弹窗 -->
+	<zan-popup show="{{ showPopup }}" type="{{center}}" bindclose="closeImg">
+		<view class="b-f show_poster  flex-x-center flex-dir-column flex-y-center">
+			<image src="{{posters.poster}}" data-url="{{posters.poster}}" bindlongpress="saveImage" mode="aspectFill" class="poster_img"></image>
+			<span class="iconfont sm-del delete" catchtap="closePopup"></span>
+      <view bindtap="saveImage" class="col-0 " style="padding: 10rpx 0; ">立即保存</view>
+		</view>
+	</zan-popup>
+
+	<!-- 确认购买弹窗 -->
+	<zan-popup show="{{ showBottomPopup }}" type="bottom" bindclose="onToggleTrade">
+		<view class="service_close dis-flex  flex-x-center flex-y-center flex-dir-column">
+				<text class="iconfont sm-quxiao1 f-60 c-f" bindtap="onToggleTrade"></text>
+				<view style="background-color: #fff; width: 2rpx; margin-top: -6rpx; height: 22rpx;"></view>
+			</view>
+		<view class="popup__trade">
+			<!-- 主体信息 -->
+			<view class="trade-main">
+				<view class="goods-info dis-flex">
+					<!-- 图片名称 -->
+					<view class="goods-image" catchtap="onPreviewSkuImage">
+						<image src="{{ detail.litpic }}">
+						</image>
+					</view>
+					<view class="right flex-box">
+						<view class="money-box dis-flex flex-y-end">
+							<!-- 商品价 -->
+							<view class="goods_title col-252525 twolist-hidden f-30">
+								<text>{{ detail.title }}</text>
+							</view>
+						</view>
+						<view class="Price dis-flex m-top10">
+              <view class="goods-price">
+								<text class="goods-price_num col-ff791c f-34 f-w">￥{{ detail.users_price }}</text>
+							</view>
+              <!-- 划线价 -->
+							<view class="line-price" wx:if="{{detail.old_price > detail.users_price}}">
+								<text class="col-909090 f-24">￥{{ detail.old_price }}</text>
+							</view>
+							<!-- <text class="flex-box f-26 col-7">库存：{{detail.stock_count}}</text> -->
+						</view>
+					</view>
+				</view>
+
+				<!-- 规格列表 -->
+				<block wx:if="{{productMultiSpec.spec_data.length}}"> 
+					<view class="goods-attr" >
+					<!-- 滚动容器 -->
+						<scroll-view class="goods-attr--scroll" scroll-y="{{ true }}">
+							<view class="group-item m-top10" wx:for="{{ productMultiSpec.spec_data }}" wx:for-item="attr"
+								wx:for-index="attr_idx" wx:key="this">
+								<view class="tips-text" data-id="{{ attr.spec_mark_id }}">{{ attr.spec_name }}</view>
+								<view class="spec-item {{ item.checked == true ? 'cur' : '' }}" wx:for="{{ attr.spec_data_new }}"
+									wx:for-index="item_idx" wx:key="this" data-attr-idx="{{ attr_idx }}" data-item-idx="{{ item_idx }}"
+									data-item-valueid="{{ item.spec_value_id }}" catchtap="onSwitchSpec" >
+									{{ item.spec_value }} </view>
+							</view>
+						</scroll-view>
+				</view>
+				</block>
+		
+
+				<!-- 购买数量 -->
+				<block  wx:if="{{shop_open == 1}}">
+				<view class="buy_number dis-flex flex-x-between flex-y-center flex-dir-row">
+					<view class="buyNumber">
+						<text>购买数量：</text>
+					</view>
+					<view class="select-number">
+						<form bindsubmit="onDecGoodsNumber">
+							<button formType="submit" class="default {{ product_num > 1 ? '' : 'disabled' }}"
+								type="default"> <text class="iconfont sm-jianhao1"></text> </button>
+						</form>
+						<input bindinput="onInputGoodsNum" type="number" value="{{ product_num }}"
+							style="display: {{ showBottomPopup ? '' : 'none' }};"></input>
+						<form bindsubmit="onIncGoodsNumber">
+							<button formType="submit" class="default" type="default"> <text class="iconfont sm-jiahao3 col-252525"></text> </button>
+						</form>
+					</view>
+				</view>
+				<view class="goods-stock-box f-28 dis-flex col-909090">
+					<text class="flex-box num">剩余{{detail.stock_count || '0'}}件</text>
+				</view>
+			</block>
+			</view>
+			<!-- 底部操作栏 -->
+			<block  wx:if="{{shop_open == 1}}">
+			<view class="footer-fixed f-30" style="width: 100%;">
+				<block wx:if="{{detail.stock_count > 0}}">
+					<!-- <view class="footer-right"  catchtap="onConfirmSubmit"> -->
+						<view class="order-bt" catchtap="onConfirmSubmit">确定</view>
+					<!-- </view> -->
+				</block>
+				<view class="default-btn" wx:else>已售罄</view>
+			</view>
+		</block>
+		</view>
+	</zan-popup>
+	
+</block>

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "tabbar": "/components/tabbar/index",
+    "all":"/components/categoryAll/index"
+  }
+
+}

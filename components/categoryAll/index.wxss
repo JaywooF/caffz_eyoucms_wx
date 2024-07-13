@@ -1,0 +1,17 @@
+.List{
+	width:750rpx;
+	display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+	align-content: space-between;
+}
+.btn{
+	background-color: #e6e8e8;
+	color: #000000;
+	width: 335rpx;
+	line-height: 40px;
+	height: 80rpx;
+	margin-top: 21rpx;
+	text-align: center;
+	margin-left: 25rpx;
+}

@@ -1,0 +1,171 @@
+<block>
+        <!--**
+ * 易优CMS
+ * ============================================================================
+ * 版权所有 2016-2028 海南赞赞网络科技有限公司，并保留所有权利。
+ * 网站地址: http://www.eyoucms.com
+ * ----------------------------------------------------------------------------
+ * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
+ * ============================================================================
+ * Author: 小虎哥 <1105415366@qq.com>
+ * Date: 2020-1-1
+ */-->
+ <block wx:if="{{typeid == 30 }}">
+    <include src="index_con.wxml" />
+</block>
+<block wx:else>
+       <view class="container">
+        <view class="page-body" style="padding: 30rpx 0 240rpx 0;">
+          <form bindsubmit="formSubmit" bindreset="formReset">
+            <view wx:for="{{attr_list_row}}" data-field="{{item}}"  wx:key="index">
+               <!-- 单行文本、邮箱、手机号码 start -->
+              <view class="page-section "  wx:if="{{item.attr_input_type == 0 || item.attr_input_type == 6 || item.attr_input_type == 7}}">
+                  <view class="txt-name">{{item.attr_name}}</view>
+                  <view class="weui-cells weui-cells_after-title flex-dir-row ">
+                    <view class="weui-cell weui-cell_input" >
+                      <view class="weui-cell__bd">
+                        <input class="weui-input" name="attr_{{item.attr_id}}" placeholder="{{item.attr_name}}" />
+                      </view>
+                    </view>
+                  </view>
+              </view>
+               <!-- 单行文本 end -->
+                <!-- 多行文本 start -->
+              <view class="page-section page-section" wx:elif="{{item.attr_input_type == 2}}">
+                <view class="txt-name">{{item.attr_name}}</view>
+                <view class="textarea-wrp">
+                  <textarea name="attr_{{item.attr_id}}" style="height: 3em" placeholder="{{item.attr_name}}" maxlength="-1" />
+                </view>
+              </view>
+              <!-- 多行文本 end -->
+              <!-- 下拉框 start -->
+              <view class="page-select page-section-gap" wx:elif="{{item.attr_input_type == 1}}">
+                <view class="txt-name">{{item.attr_name}}</view>
+                <view class="uni-form-item uni-column">
+                  <picker name="attr_{{item.attr_id}}" bindchange="examinationType" data-id="{{item.attr_id}}" range="{{item.options}}"  class="flex-dir-row flex-y-center flex-x-between" style="display: contents;">
+                    <label class="" style=" padding: 20rpx 30rpx; margin: 0;width: 80%;">{{item.selected}}</label>
+                    <text class="iconfont col-727272 sm-xiangxia1"></text>
+                  </picker>
+                </view> 
+              </view>
+              <!-- 下拉框 end -->
+              <!-- 单选框 start -->
+              <view class="page-select page-section-gap" wx:elif="{{item.attr_input_type == 3}}">
+                <view class="txt-name">{{item.attr_name}}</view>
+                <radio-group name="attr_{{item.attr_id}}">
+                    <block wx:for="{{item.options}}" wx:for-item="rg_item" wx:key="rg_index">
+                      <label>
+                        <radio value="{{rg_item}}" />
+                          {{rg_item}}
+                      </label>
+                    </block>
+                </radio-group>
+              </view>
+              <!-- 单选框 end -->
+              <!-- 多选框 start -->
+              <view class="page-select page-section-gap" wx:if="{{item.attr_input_type == 4}}">
+                <view class="txt-name">{{item.attr_name}}</view>
+                <checkbox-group name="attr_{{item.attr_id}}">
+                  <block wx:for="{{item.options}}" wx:for-item="cg_item" wx:key="cg_index">
+                    <label><checkbox value="{{cg_item}}" />{{ cg_item }}</label>
+                  </block>
+                </checkbox-group>
+              </view>
+              <!-- 多选框 end -->
+              <!-- 时间类型 start -->
+              <view class="page-select page-section-gap" wx:elif="{{item.attr_input_type == 10}}">
+                <view class="txt-name">{{item.attr_name}}</view>
+                <view class="uni-form-item uni-column">
+                  <picker name="attr_{{item.attr_id}}" bindchange="examinationDate" data-id="{{item.attr_id}}" mode="date"  class="flex-dir-row flex-y-center flex-x-between">
+                    <label class="" style=" padding: 20rpx 30rpx;">{{item.selected}}</label>
+                    <text class="iconfont col-727272 sm-desc"></text>
+                  </picker>
+                </view> 
+              </view>
+              <!-- 时间类型 end -->
+              <!-- 附件类型 start -->
+              <view class="page-dow"  wx:elif="{{item.attr_input_type == 8}}">
+                <view class="txt-name">{{item.attr_name}}</view>
+                  <view class="dowlist">
+                  <view class="item"  wx:if="{{item.selected}}">
+                    <image class="dow-pic"  src="/static/images/dedault_file.jpeg" alt=""></image>
+                    <view class='delete' bindtap='deleteFile' data-id="{{item.attr_id}}">
+                      <view class="iconfont sm-quxiao2"></view>
+                    </view>
+                    <view>{{item.selected_name}}</view>
+                  </view>
+                  <view class="last-item"  data-id="{{item.attr_id}}" wx:if="{{item.selected.length >= 1 ? false : true}}" bindtap="examinationFile">
+                   <text class="sign iconfont sm-jiahao1"></text>
+                  </view>
+                  <input name="attr_{{item.attr_id}}" value="{{item.selected}}"  style="display:none;"/>
+                </view>
+              </view>
+              <!-- 附件类型 end -->
+              <!-- 单图片 start -->
+            <view class="page-img"  wx:elif="{{item.attr_input_type == 5}}">
+              <view class="txt-name">{{item.attr_name}}</view>
+                <view class="imglist">
+                 <view class="item"  wx:if="{{item.selected}}">
+                    <image src="{{item.selected}}" alt=""></image>
+                    <view class='delete' bindtap='deleteImage' data-id="{{item.attr_id}}">
+                      <view class="iconfont sm-quxiao2"></view>
+                    </view>
+                  </view>
+                  <view class="last-item"  data-id="{{item.attr_id}}" wx:if="{{item.selected.length >= 1 ? false : true}}" bindtap="examinationImage">
+                   <text class="sign iconfont sm-jiahao1"></text>
+                  </view>
+                </view>
+              </view>
+              <!-- 单图片 end -->
+              <!-- 多图片 start -->
+              <view class="page-img"  wx:elif="{{item.attr_input_type == 11}}">
+                <view class="txt-name">{{item.attr_name}}</view>
+                  <view class="imglist">
+                    <view class="item"  wx:for="{{item.selected}}" wx:for-item="imgs_item" wx:key="imgs_index">
+                      <image src="{{imgs_item}}" alt=""></image>
+                      <view class='delete' bindtap='deleteImages' data-id="{{item.attr_id}}" data-index="{{imgs_index}}">
+                        <view class="iconfont sm-quxiao2"></view>
+                      </view>
+                  </view>
+                  <view class="last-item"  data-id="{{item.attr_id}}" wx:if="{{item.selected.length >= 9 ? false : true}}" bindtap="examinationImages">
+                   <text class="sign iconfont sm-jiahao1"></text>
+                  </view>
+                  <input name="attr_{{item.attr_id}}" value="{{item.selected}}"  style="display:none;"/>
+                </view>
+              </view>
+              <!-- 多图片 end -->
+              <!-- 区域联动 start -->
+              <view class="page-select page-section-gap" wx:elif="{{item.attr_input_type == 9}}">
+                <view class="txt-name">{{item.attr_name}}</view>
+                <view class="uni-form-item uni-column">
+                  <view class="selected-date"  data-id="{{item.attr_id}}" bindtap="bindRegionShow">{{item.selected_name}}</view>
+                  <picker-view wx:if="{{item.show}}" indicator-style="height: 50px;" style="width: 100%; height: 300px;"  data-id="{{item.attr_id}}" value="{{item.selected_id}}" bindchange="bindRegionChange">
+                    <picker-view-column wx:if="{{item.options1}}">
+                      <view wx:for="{{item.options1}}" wx:for-item="item1" wx:key="id" style="liindexne-height: 50px; text-align: center;">{{item1.name}}</view>
+                    </picker-view-column>
+                    <picker-view-column wx:if="{{item.options2}}">
+                      <view wx:for="{{item.options2}}" wx:for-item="item2" wx:key="id" style="line-height: 50px; text-align: center;">{{item2.name}}</view>
+                    </picker-view-column>
+                    <picker-view-column wx:if="{{item.options3}}">
+                      <view wx:for="{{item.options3}}" wx:for-item="item3" wx:key="id" style="line-height: 50px; text-align: center;">{{item3.name}}</view>
+                    </picker-view-column>
+                  </picker-view>
+                </view> 
+              </view>
+              <!-- 区域联动 end -->
+            </view>
+            <!-- 按钮操作 start -->
+            <view class="btn-area">
+              <button type="default" formType="submit" style="background-color: {{blist.sel_color}}" loading="{{loading}}">提交</button>
+              <button formType="reset">重置</button>
+            </view>
+            <!-- 按钮操作 end -->
+          </form>
+        </view>
+       </view>
+        <!-- 这里是底部 -->
+
+      </block>
+        <!-- 快捷导航 -->
+        <shortcut shortcutType="share"></shortcut>
+    </block>
